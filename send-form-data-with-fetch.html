@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>See Network Tab</h1>
+    <button onclick="fetchPost();">
+        SEND With fetch()
+    </button>
+
+    <hr>
+
+    <form method="POST" action="#" id='form'>
+        <input type="text" name='name' value='Moon'>
+        <input type="text" name='age' value='26'>
+        <input type="email" name='age' value='moon@moazmahmud.com'>
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        async function fetchPost() {
+            const data = {
+                name: 'moaz',
+                age: 30,
+                email: 'moaz@moazmahmud.com'
+            }
+
+            const searchParam = new URLSearchParams(data).toString();
+            console.log(searchParam);
+
+            fetch('#', {
+                method: 'post',
+                headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+                body: searchParam
+            });
+        }
+    </script>
+</body>
+
+</html>
