@@ -3,25 +3,79 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <title>Fetch</title>
 </head>
 
 <body>
-    <h1>See Network Tab</h1>
-    <button onclick="fetchPost();">
-        SEND With fetch()
-    </button>
+    <h1 class="text-center">Fetch for POST (See Network Tab)</h1>
 
-    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Tradional form to Compare Network Request</h4>
+                <form method="POST" action="#" id='form-for-test'>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" placeholder="Enter email" name='name' value=''>
+                    </div>
 
-    <form method="POST" action="#" id='form'>
-        <input type="text" name='name' value='Moon'>
-        <input type="text" name='age' value='26'>
-        <input type="email" name='age' value='moon@moazmahmud.com'>
-        <input type="submit" value="Submit">
-    </form>
+                    <div class="form-group">
+                        <label for="university">University</label>
+                        <input type="text" class="form-control" placeholder="University" name='university' value=''>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" placeholder="Enter email" name='email' value=''>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+
+            <div class="col-md-6">
+                <h4>Form Sent Using Fetch</h4>
+                <form method="POST" action="#" id='form-for-fetch'>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" placeholder="Enter email" name='name' value=''>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="university">University</label>
+                        <input type="text" class="form-control" placeholder="University" name='university' value=''>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" placeholder="Enter email" name='email' value=''>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="text-center">
+            <h2>Button for Ajax Call</h2>
+            <button class="btn btn-success" onclick="fetchPost();">
+                SEND With fetch()
+            </button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <script>
         async function fetchPost() {
@@ -31,15 +85,38 @@
                 email: 'moaz@moazmahmud.com'
             }
 
-            const searchParam = new URLSearchParams(data).toString();
+            const searchParam = new URLSearchParams(data);
             console.log(searchParam);
-
-            fetch('#', {
+            const response = await fetch('#', {
                 method: 'post',
-                headers: { 'Content-type': 'application/x-www-form-urlencoded' },
                 body: searchParam
+                // headers: { 'Content-type': 'application/x-www-form-urlencoded' }
+                // if you directly use URLSearchParams object header is assumed to be 'application/x-www-form-urlencoded' 
             });
         }
+
+        document.getElementById('form-for-fetch').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formElement = event.target;
+            const formData = new FormData(formElement);
+
+            const searchParam = new URLSearchParams(formData);
+            console.log(searchParam.toString());
+            const response = await fetch('#', {
+                method: 'post',
+                body: searchParam
+            });
+
+            // if you directly use form data object header is assumed to be 'multipart/form-data;' 
+            /*
+            const response = await fetch('#', {
+                method: 'post',
+                body: formData,
+                // headers: { 'Content-type': 'multipart/form-data;' }
+            });
+            */
+        });
     </script>
 </body>
 
