@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .source-url {
+            text-decoration: none;
+            color: white;
+        }
+
+        .source-url:hover {
+            text-decoration: none;
+            color: rgb(108, 201, 154);
+        }
+    </style>
+    <title>Fetch</title>
+</head>
+
+<body>
+    <div class="container mb-4">
+        <h1 class="text-center">
+            Form Data as JSON (See Console)
+        </h1>
+        <div class="text-center">
+            Source
+            <span class="badge badge-info">
+                <a href="https://www.learnwithjason.dev/blog/get-form-values-as-json" class="source-url">
+                    https://www.learnwithjason.dev/blog/get-form-values-as-json
+                </a>
+            </span>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <div class="container">
+        <h4>Tradional form to Compare Network Request</h4>
+        <form method="POST" action="#" id='form-for-test'>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" placeholder="Enter email" name='name' value=''>
+            </div>
+
+            <div class="form-group">
+                <label for="university">University</label>
+                <input type="text" class="form-control" placeholder="University" name='university' value=''>
+            </div>
+
+            <div class="form-group">
+                <label for="levelTerm">Example select</label>
+                <select class="form-control" name="levelTerm">
+                    <option value="">Select</option>
+                    <option value="L1T1">L1/T1</option>
+                    <option value="L1T2">L1/T2</option>
+                    <option value="L2T1">L2/T1</option>
+                    <option value="L3T1">L3/T1</option>
+                    <option value="L3T1">L3/T2</option>
+                    <option value="L4T1">L4/T1</option>
+                    <option value="L4T1">L4/T2</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" placeholder="Enter email" name='email' value=''>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script>
+        document.getElementById('form-for-test').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const formElement = event.target;
+            const formData = new FormData(formElement);
+
+            const object = Object.fromEntries(formData.entries());
+
+            console.log(object);
+        });
+    </script>
+</body>
+
+</html>
