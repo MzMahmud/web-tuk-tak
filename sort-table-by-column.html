@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <title>Document</title>
+</head>
+
+<style>
+    i {
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <h3>Sort Table By Row</h3>
+        <div class="row">
+            <div class="col-12">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <th>
+                            <i class="fa fa-sort-up" onclick="sortTableRows(1, 0, parseString);"></i>
+                            Name
+                            <i class="fa fa-sort-down" onclick="sortTableRows(-1, 0, parseString);"></i>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-up" onclick="sortTableRows(1, 1, parseInt);"></i>
+                            Age
+                            <i class="fa fa-sort-down" onclick="sortTableRows(-1, 1, parseInt);"></i>
+                        </th>
+                        <th>
+                            <i class="fa fa-sort-up" onclick="sortTableRows(1, 2, parseDate);"></i>
+                            Favourite Date
+                            <i class="fa fa-sort-down" onclick="sortTableRows(-1, 2, parseDate);"></i>
+                        </th>
+                    </thead>
+                    <tbody id='table-head'>
+                        <tr>
+                            <td>Moon</td>
+                            <td>21</td>
+                            <td>15/10/2000</td>
+                        </tr>
+                        <tr>
+                            <td>Moaz</td>
+                            <td>25</td>
+                            <td>04/10/1996</td>
+                        </tr>
+                        <tr>
+                            <td>Maisha</td>
+                            <td>11</td>
+                            <td>23/05/2011</td>
+                        </tr>
+                        <tr>
+                            <td>Farshi</td>
+                            <td>24</td>
+                            <td>30/01/1997</td>
+                        </tr>
+                        <tr>
+                            <td>Tanvir</td>
+                            <td>24</td>
+                            <td>17/11/1997</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn btn-success" type="button" onclick="addRandomData(1000);">
+                    Add Random Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./my-random.js"></script>
+
+    <script>
+        function sortTableRows(direction, columnIndex, getSortingData) {
+            const table = document.getElementById("table-head");
+            const rowsObj = Array.from(table.rows).map(
+                elem => {
+                    const columnText = elem.cells[columnIndex].innerText.trim();
+                    return {
+                        data: getSortingData(columnText),
+                        htmlElem: elem
+                    };
+                }
+            );
+            rowsObj.sort((a, b) => direction * compare(a.data, b.data));
+            table.innerHTML = '';
+            rowsObj.forEach(rowObj => table.append(rowObj.htmlElem));
+        }
+
+        const parseString = str => `${str}`;
+
+        function parseDate(dateStr) {
+            const dayMonthYear = dateStr.split('/');
+            const date = new Date(dayMonthYear[2], dayMonthYear[1] - 1, dayMonthYear[0]);
+            return parseInt(date.getTime());
+        }
+
+        function compare(a, b) {
+            if (a === b) return 0;
+            return a < b ? -1 : 1;
+        }
+
+        function addRandomData(count) {
+            const table = document.getElementById("table-head");
+
+            let nameLength, randomName, randomAge, randomDate, innderTd, newTr;
+
+            for (let i = 0; i < count; i++) {
+                nameLength = randomIntInRange(3, 7);
+                randomName = getRandomString(nameLength);
+                randomAge = randomIntInRange(1, 101);
+                randomDate = `${randomIntInRange(1, 29)}/${randomIntInRange(1, 13)}/${randomIntInRange(1910, 2022)}`
+                innderTd =
+                    `<td>${randomName}</td>
+                     <td>${randomAge}</td>
+                     <td>${randomDate}</td>`;
+                newTr = document.createElement('tr');
+                newTr.innerHTML = innderTd;
+                table.append(newTr);
+            }
+        }
+    </script>
+</body>
+
+</html>
