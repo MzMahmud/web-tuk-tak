@@ -60,6 +60,7 @@ function isBdDate(string) {
         return false;
 
     const dateRegex = /^[0-9০-৯]{1,2}[-/][0-9০-৯]{1,2}[-/][0-9০-৯]{2,4}$/;
+    // const dateRegex = /^[0-9\u09e6-\u09ef]{1,2}[-/][0-9\u09e6-\u09ef]{1,2}[-/][0-9\u09e6-\u09ef]{2,4}$/;
     return dateRegex.test(string);
 }
 
@@ -101,7 +102,9 @@ function testDate() {
         '৪-১০-৯৬৫৪আ',
     ];
 
-    const dateRegex = /^[0-9০-৯]{1,2}[-/][0-9০-৯]{1,2}[-/][0-9০-৯]{2,4}$/;
+    // const dateRegex = /^[0-9০-৯]{1,2}[-/][0-9০-৯]{1,2}[-/][0-9০-৯]{2,4}$/;
+    const dateRegex = /^[0-9\u09e6-\u09ef]{1,2}[-/][0-9\u09e6-\u09ef]{1,2}[-/][0-9\u09e6-\u09ef]{2,4}$/;
+    console.log(dateRegex);
 
     dates = dates.filter(date => dateRegex.test(date));
 
@@ -112,4 +115,16 @@ function testDate() {
     });
 }
 
-testDate();
+function convertToEnglishNumberUnicode(string) {
+    const banglaZero = '\u09e6';
+    const englishZero = '0';
+    let banglaDigit, englishDigit;
+
+    string = String(string);
+    for (let i = 0; i <= 9; i++) {
+        banglaDigit = String.fromCharCode(banglaZero.charCodeAt(0) + i);
+        englishDigit = String.fromCharCode(englishZero.charCodeAt(0) + i);
+        string = string.replaceAll(banglaDigit, englishDigit);
+    }
+    return string;
+}
