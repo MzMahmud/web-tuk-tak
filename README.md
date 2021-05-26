@@ -4,6 +4,7 @@ If you are Bangla speaker you can probably guess the intent of this repo from th
 I am mainly a back-end person. You can probably guess from my bad front end design in this repo. Anyway, this repo acts as a cheet-sheet for the things I have learnt working with client side javascript works.
 
 Some of the highlights are:
+- **A Multiselect Table :** In this, data is received as _JSON_ then the data is shown in a table. Here the `dataset attribute` of _HTML5_ is used to store the data in `tr` tag. Shown data then can be **selected** and **moved** to another table. The added data can also be removed. Also, the added data is maintained is a _javascript_ `Map`. This allows to get added data from this map.
 
 - **A dynamic html table** where you can add/remove row to input varibale number of data. This is done with HTML and _Vanilla JavaScript_. Also you can get the input data as _JSON_.
 
