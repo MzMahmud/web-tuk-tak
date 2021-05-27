@@ -22,7 +22,7 @@
 </head>
 
 <style>
-    .custom-hidden {
+    .template-row {
         display: none;
     }
 </style>
@@ -44,12 +44,12 @@
 
                     <!-- Template Row-> to be cloned to add new row.
                             CONVENTIONS: 
-                            * Template Row Id   -> tr with custom-hidden class
-                            * Template td class -> data-filedName
-                        -->
-                    <tr class="custom-hidden">
-                        <td class="data-name"></td>
-                        <td class="data-age"></td>
+                            * one tr with template-row class
+                            * td with class -> row-data-filedNameInJson
+                    -->
+                    <tr class="template-row">
+                        <td class="row-data-name"></td>
+                        <td class="row-data-age"></td>
                         <td>
                             <button class="btn btn-success" onclick="selectRow(this);">
                                 ->
@@ -77,12 +77,12 @@
 
                     <!-- Template Row-> to be cloned to add new row.
                             CONVENTIONS: 
-                            * Template Row Id   -> tr with custom-hidden class
-                            * Template td class -> data-filedName
-                        -->
-                    <tr class="custom-hidden">
-                        <td class="data-name"></td>
-                        <td class="data-age"></td>
+                            * one tr with template-row class
+                            * td with class -> row-data-filedNameInJson
+                    -->
+                    <tr class="template-row">
+                        <td class="row-data-name"></td>
+                        <td class="row-data-age"></td>
                         <td>
                             <button class="btn btn-danger" onclick="unSelectRow(this);">
                                 &lt;-
@@ -104,62 +104,54 @@
             { name: 'Maliha Anjum', age: 10 },
             { name: 'Tanvir Mahmud', age: 23 },
         ];
-        let salt = '';
+
         function getData() {
             // spread operator. used to copy array
             let data = [...users];
             data = data.map(user => {
                 // spread operator. used to copy object
                 const clonedUser = { ...user };
-                clonedUser.name += ` ${salt}`;
-                if (salt !== '') {
-                    clonedUser.age = randomIntInRange(1, 60);
-                }
+                clonedUser.name += ` ${getRandomString(5)}`;
+                clonedUser.age = randomIntInRange(1, 60);
                 return clonedUser;
             });
             data.forEach(d => addDataInTable('got-users-table', d));
-            salt = getRandomString(5);
         }
 
         document.getElementById('get-data-btn').addEventListener('click', getData);
         document.getElementById('clear-table-btn').addEventListener('click', () => {
-            salt = '';
             document.getElementById('got-users-table').querySelector('tbody').innerHTML = '';
         });
 
         function addDataInTable(tableId, jsonData) {
             const table = document.getElementById(tableId);
 
-            const templateRow = table.querySelector('.custom-hidden').cloneNode(true);
-            templateRow.classList.remove('custom-hidden');
+            const templateRow = table.querySelector('.template-row').cloneNode(true);
+            templateRow.classList.remove('template-row');
 
             // dataset attribute to store the data in tr
-            templateRow.dataset.user = JSON.stringify(jsonData);
+            templateRow.dataset.rowData = JSON.stringify(jsonData);
 
             for (let key in jsonData) {
-                const tdElement = templateRow.querySelector(`.data-${key}`);
-                tdElement.innerText = jsonData[key];
+                const tdElement = templateRow.querySelector(`td.row-data-${key}`);
+                if (tdElement) tdElement.innerText = jsonData[key];
             }
 
             table.querySelector('tbody').append(templateRow);
         }
 
-        function getUserRemoveRowAddToOtherTable(rowButtonElement, toTable) {
+        function getRowDataAndMoveRow(rowButtonElement, destTableId) {
             const containingRow = rowButtonElement.parentNode.parentNode;
-
-            // get the user json data from td's dataset attribute
-            const user = JSON.parse(containingRow.dataset.user);
-
-            addDataInTable(toTable, user);
+            const rowData = JSON.parse(containingRow.dataset.rowData);
+            if (destTableId) addDataInTable(destTableId, rowData);
             containingRow.remove();
-
-            return user;
+            return rowData;
         }
 
         const addedUser = new Map();
 
         function selectRow(rowButtonElement) {
-            const selectedUser = getUserRemoveRowAddToOtherTable(rowButtonElement, 'selected-users-table');
+            const selectedUser = getRowDataAndMoveRow(rowButtonElement, 'selected-users-table');
 
             addedUser.set(selectedUser.name, selectedUser);
             console.log('collection afetr selection');
@@ -167,7 +159,7 @@
         }
 
         function unSelectRow(rowButtonElement) {
-            const unSelectedUser = getUserRemoveRowAddToOtherTable(rowButtonElement, 'got-users-table');
+            const unSelectedUser = getRowDataAndMoveRow(rowButtonElement, 'got-users-table');
 
             addedUser.delete(unSelectedUser.name);
             console.log('collection after un-selection');
