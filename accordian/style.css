@@ -1,0 +1,45 @@
+.accordion * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgba(216, 191, 216, 0.808);
+}
+
+.accordion-item {
+    background-color: rgba(236, 220, 220, 0.877);
+    margin: 2rem 1rem 0 1rem;
+    color: #444;
+    border-radius: .5rem;
+    padding: 1rem;
+}
+
+.accordion-title {
+    font-size: 1.25rem;
+    padding: .5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.accordion-title:after {
+    content: '\02795';
+    font-size: 13px;
+    margin-left: auto;
+    color: #000;
+}
+
+.active-title:after{
+    content: "\2796";
+    font-size: 13px;
+    margin-left: auto;
+}
+
+.accordion-body {
+    padding: 0 .5rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: 500ms all ease-in-out;
+}
