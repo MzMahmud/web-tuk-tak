@@ -21,12 +21,6 @@
     <title>Document</title>
 </head>
 
-<style>
-    .template-row {
-        display: none;
-    }
-</style>
-
 <body>
 
     <div class="container text-center">
@@ -89,6 +83,14 @@
 
 <script>
     setupTotalRow('data-table', 'Total', 2, [2, 4, 5]);
+
+    const colIndicesToSum = [2, 4, 5];
+    const colIndicesSet = new Set(colIndicesToSum);
+    document.querySelectorAll('#data-table tbody td input').forEach(input => {
+        const columnIndex = input.closest('td').cellIndex;
+        if (colIndicesSet.has(columnIndex))
+            input.onkeyup = sumThisColumn;
+    });
 </script>
 
 </html>

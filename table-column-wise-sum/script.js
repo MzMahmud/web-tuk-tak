@@ -2,7 +2,7 @@ function getTotalColId(tableId, columnIndex) {
     return tableId + '-total-col-' + columnIndex;
 }
 
-function addTotalRow(tableId, totalTitle, totalTitleColSpan) {
+function addTotalRowInTfoot(tableId, totalTitle, totalTitleColSpan) {
     const table = document.getElementById(tableId);
     const nCols = table.rows[0].cells.length;
 
@@ -21,6 +21,7 @@ function addTotalRow(tableId, totalTitle, totalTitleColSpan) {
     }
 
     const tableFoot = document.createElement('tfoot');
+    tableFoot.innerHTML = '';
     tableFoot.append(tr);
     table.append(tableFoot);
 }
@@ -54,15 +55,7 @@ function sumThisColumn() {
     showSumOfColumnValues(tableId, columnIndex);
 }
 
-function setupTotalRow(tableId, totalTile, totalTitleColSpan, colIndices) {
-    addTotalRow(tableId, totalTile, totalTitleColSpan);
-
-    colIndices.forEach(columnIndex => showSumOfColumnValues(tableId, columnIndex));
-
-    const colIndicesSet = new Set(colIndices);
-    document.querySelectorAll('#' + tableId + ' tbody td input').forEach(input => {
-        const columnIndex = input.closest('td').cellIndex;
-        if (colIndicesSet.has(columnIndex))
-            input.onkeyup = sumThisColumn;
-    });
+function setupTotalRow(tableId, totalTitle, totalTitleColSpan, colIndicesToSum) {
+    addTotalRowInTfoot(tableId, totalTitle, totalTitleColSpan);
+    colIndicesToSum.forEach(columnIndex => showSumOfColumnValues(tableId, columnIndex));
 }
