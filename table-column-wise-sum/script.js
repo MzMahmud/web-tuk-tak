@@ -6,23 +6,24 @@ function addTotalRowInTfoot(tableId, totalTitle, totalTitleColSpan) {
     const table = document.getElementById(tableId);
     const nCols = table.rows[0].cells.length;
 
-    const tr = document.createElement('tr');
+    const titleRow = document.createElement('tr');
 
     const titleTd = document.createElement('td');
     titleTd.colSpan = totalTitleColSpan;
     titleTd.innerText = totalTitle;
+    titleTd.style.fontWeight = 'bold';
 
-    tr.append(titleTd);
+    titleRow.append(titleTd);
 
     for (let columnIndex = totalTitleColSpan; columnIndex < nCols; columnIndex++) {
         const td = document.createElement('td');
         td.id = getTotalColId(tableId, columnIndex);
-        tr.append(td);
+        titleRow.append(td);
     }
 
     const tableFoot = document.createElement('tfoot');
     tableFoot.innerHTML = '';
-    tableFoot.append(tr);
+    tableFoot.append(titleRow);
     table.append(tableFoot);
 }
 
