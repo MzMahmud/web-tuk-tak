@@ -34,9 +34,9 @@ function getIfValidOrOther(str, other = 0) {
 
 function showSumOfColumnValues(tableId, columnIndex) {
     const tableBody = document.querySelector('#' + tableId + " tbody");
-    const columns = [...tableBody.rows].map(row => row.cells[columnIndex]);
+    const columnCells = [...tableBody.rows].map(row => row.cells[columnIndex]);
 
-    const columnsValueSum = columns.reduce((acc, val) => acc + extractCellValue(val), 0);
+    const columnsValueSum = columnCells.reduce((acc, cell) => acc + extractCellValue(cell), 0);
 
     const totalCol = document.getElementById(
         getTotalColId(tableId, columnIndex)
