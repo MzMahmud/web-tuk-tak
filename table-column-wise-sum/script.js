@@ -4,7 +4,7 @@ function getTotalColId(tableId, columnIndex) {
 
 function addTotalRowInTfoot(tableId, totalTitle, totalTitleColSpan) {
     const table = document.getElementById(tableId);
-    const nCols = table.rows[0].cells.length;
+    const nCols = table.querySelector('tbody').rows[0].cells.length;
 
     const titleRow = document.createElement('tr');
 
