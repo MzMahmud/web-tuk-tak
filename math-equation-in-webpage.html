@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathJax example</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <h2>Description</h2>
+
+    <p>
+        Given a positive integer \(n\), you have to find the number of ways you can express \(n\) as sum of consecutive
+        integers. You have to use at least two integers.
+        For example, \(n = 15\) has three solutions, \( (1+2+3+4+5), (4+5+6), (7+8)\).
+    </p>
+
+    <p>
+        একটা ধনাত্মক সংখ্যা \(n\) দেয়া আছে, তোমাকে বের করতে হবে \(n\) কে কত উপায়ে একাধিক ক্রমিক সংখ্যার যোগফল আকারে লেখা
+        যায়। যেমন, \(n = 15\) কে তিন উপায়ে লেখা যায়, \( (1+2+3+4+5), (4+5+6), (7+8)\).
+    </p>
+
+    <p>
+        <a href="https://lightoj.com/problem/sum-of-consecutive-integers">Problem Link</a>
+    </p>
+
+    <h2>আমার সমাধান</h2>
+
+    <p>
+        ধরে নেই \(a,b\in \mathbb{N},a \neq b\)
+        \[
+        \begin{eqnarray*}
+        &&a + (a+1) + (a+2) + \cdots + b = n\\
+        &\Rightarrow& \sum_{k = a}^{b} k = n\\
+        &\Rightarrow& \sum_{k = 1}^{b} k - \sum_{k = 1}^{a-1} k = n\\
+        &\Rightarrow& \frac{b(b+1)}{2} - \frac{(a-1)(a-1+1)}{2} = n\\
+        &\Rightarrow& b^2 + b - (a^2-a) = 2n\\
+        &\Rightarrow& b^2 - a^2 + (b+a) = 2n\\
+        &\Rightarrow& (b+a)(b-a)+ (b+a) = 2n\\
+        &\therefore& (b+a)(b-a+1) = 2n
+        \end{eqnarray*}
+        \]
+    </p>
+
+    <p>
+        এটা স্পষ্ট যে, \(a\) ও \(b\) এর যত গুলো স্বাভাবিক সংখ্যার মান সম্ভব, ঠিক তত ভাবেই \(n\) কে ক্রমিক সংখার যোগফল
+        আকারে লেখা যায়। যেহেতু, \(a,b \in \mathbb{N}\) এবং \((b+a)(b-a+1) = 2n\) কাজেই \((b+a)\) এবং \((b-a+1)\) কে
+        অবস্যই \(2n\) এর উৎপাদক হতে হবে। ধরে নেই, \(p\) ও \(q, 2n\) এর যেকোন উৎপাদক এবং \(p \ge q\); অর্থাৎ,
+        \(pq = 2n\).
+    </p>
+
+    <p>
+        তাহলে \(b + a = p, b - a + 1 = q\) অথবা \(b + a = q, b - a + 1 = p\) হতে হবে। কিন্তু, যেহেতু \(p \ge q\), তাই
+        \(b + a = q, b - a + 1 = p\) হওয়া সম্ভব না। কারণ, তাহলে \(a, b\) ধনাত্মক হবেনা। কাজেই, ধনাত্মক সংখ্যার জন্য, \(b
+        + a = p, b - a + 1 = q\). তাহলে,
+        \[
+        b = \frac{p+q-1}{2}
+        \]
+        \[
+        a = \frac{p-q+1}{2}
+        \]
+    </p>
+
+    <p>
+        এখন \(p\) ও \(q, 2n\) এর উৎপাদক বলে \(p, q\) এর অন্তত একটি জোড় হতে হবে। কিন্তু যদি \(p, q\) দুটি সংখ্যাই জোড় হয়
+        তবে \(b = \frac{p+q-1}{2}\) ও \(a = \frac{p-q+1}{2}\) পূর্ণ সংখ্যা হতে পারবে না। অর্থাৎ, \(p, q\) এর মধ্যে একটি
+        বিজোড় হবে এবং অপরটি জোড় হবে। কাজেই \(2n\) এর উৎপাদকের মধ্যে যতগুলো বিজোড় সংখ্যা আছে \(a, b\) এর ঠিক তত গুলোই মান
+        থাকবে। তবে প্রশ্নে একাধিক সংখ্যা চাওয়া হয়েছে। \(p = 2n, q = 1\) হলে \(a = b = n\) যেটা \(a \ne b\) এর সাথে
+        অসঙ্গতিপূর্ণ।
+    </p>
+
+    <p>
+        সুতরাং, \(p = 2n, q = 1)\) এর উৎপাদক জোড়া ব্যতিত আর \(2n\) যেকয়টি জোড়-বিজোড় উৎপাদক আছে \(a, b\) এর ঠিক তত গুলি
+        মান সম্ভব। কাজেই, \(n\) কে ঠিক তত উপায়ে ধনাত্মক ক্রমিক পূর্ণসংখ্যার যোগফল আকারে লেখা যায় তা হল,
+    </p>
+
+    <div style="text-align: center;">
+        \(2n\) এর বিজোড় উৎপাদক সংখ্যা \(- 1\)
+    </div>
+
+    <p>
+        কিন্তু \(2n\) এর বিজোড় উৎপাদক সংখ্যা এবং \(n\) এর বিজোড় উৎপাদক সংখ্যা একই হবে। কাজেই সমাধান হল,
+    </p>
+
+    <div style="text-align: center; font-weight: bold;">
+        \(n\) এর বিজোড় উৎপাদক সংখ্যা \(- 1\)
+    </div>
+
+    <p>
+        উৎপাদকের সংখ্যা সম্পর্কে যদি না জেনে থাকেন তবে নিচের লিংক গুলোতে ঘুরে শুরু করে দিয়ে পারেনঃ
+    </p>
+    <ul>
+        <li><a href="https://en.wikipedia.org/wiki/Divisor_function">Wikipedia</a></li>
+        <li><a href="https://brilliant.org/wiki/factors/">Brilliant Wiki</a></li>
+    </ul>
+
+    <h2>
+        <a
+            href="https://github.com/MzMahmud/Competitive_Programming/blob/master/Light%20OJ/LOJ%20My%20Solution/1278%20-%20Sum%20of%20Consecutive%20Integers.cpp">
+            C++ কোড
+        </a>
+    </h2>
+
+</body>
+
+</html>
